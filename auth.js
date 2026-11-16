@@ -95,7 +95,7 @@ if (formularioLogin) {
         const role = obterPerfil();
         const usuario = lerUsuarios().find((item) => item.email === email && item.senha === senha && item.role === role);
         if (!usuario) { exibirNotificacao('E-mail, senha ou perfil incorreto.', 'erro'); return; }
-        localStorage.setItem(CHAVE_SESSAO, JSON.stringify({ email: usuario.email, nome: usuario.nome, role: usuario.role, gender: usuario.gender }));
+        localStorage.setItem(CHAVE_SESSAO, JSON.stringify({ email: usuario.email, name: usuario.nome, nome: usuario.nome, role: usuario.role, gender: usuario.gender }));
         exibirNotificacao('Login realizado com sucesso!');
         setTimeout(() => redirecionar(role === 'professor' ? 'index_professor.html' : 'index_alunos.html'), 500);
     });
