@@ -34,6 +34,8 @@ function preencherSaudacaoUsuario(elemento, tratamento, nome) {
 
 
 // ── SESSÃO: verifica autenticação e personaliza a página ─────────────
+// No GitHub Pages não há Flask/SQLite; a demonstração usa localStorage.
+const CHAVE_SESSAO = 'horizonte_sessao';
 const elementoNomeUsuario = document.getElementById('nomeUsuario');
 const botaoSair           = document.getElementById('botaoSair');
 const areaProfessor       = document.getElementById('areaProfessor');
@@ -41,19 +43,12 @@ const linkAreaProfessor   = document.getElementById('linkAreaProfessor');
 const perfilDaPagina      = document.body.dataset.perfil || 'aluno';
 const parametrosDaPagina  = new URLSearchParams(window.location.search);
 
-// Consulta o servidor para saber se o usuário está logado.
-// Se não estiver, redireciona para a tela de login.
-async function verificarAutenticacao() {
+function verificarAutenticacao() {
     try {
-        const resposta = await fetch('/api/usuario-atual', { credentials: 'same-origin' });
-        if (resposta.status === 401) {
-            window.location.href = `/login_${perfilDaPagina}.html`;
+        const dados = JSON.parse(localStorage.getItem(CHAVE_SESSAO) || 'null');
+        if (!dados || dados.role !== perfilDaPagina) {
+            window.location.href = new URL(`login_${perfilDaPagina}.html`, document.baseURI).href;
             return;
-        }
-        const dados    = await resposta.json();
-
-        if (!resposta.ok) {
-            throw new Error(dados.error || 'Não foi possível verificar a sessão.');
         }
 
         if (dados.role !== perfilDaPagina) {
@@ -107,21 +102,14 @@ async function verificarAutenticacao() {
 
     } catch (erro) {
         console.error('Erro ao verificar autenticação:', erro);
+        window.location.href = new URL(`login_${perfilDaPagina}.html`, document.baseURI).href;
     }
 }
 
-// Ao clicar em "Sair", encerra a sessão no servidor e volta para o login
+// Ao clicar em "Sair", encerra a sessão local e volta para o login
 botaoSair?.addEventListener('click', async () => {
-    let destino = `/login_${perfilDaPagina}.html`;
-    try {
-        const resposta = await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
-        if (!resposta.ok) throw new Error('Não foi possível encerrar a sessão.');
-        const dados = await resposta.json();
-        destino = dados.redirect || destino;
-    } catch (erro) {
-        console.error('Erro ao sair:', erro);
-    }
-    window.location.href = destino;
+    localStorage.removeItem(CHAVE_SESSAO);
+    window.location.href = new URL(`login_${perfilDaPagina}.html`, document.baseURI).href;
 });
 
 

@@ -1,169 +1,102 @@
-// ======================================================================
-// Horizonte Educacional — login por perfil e cadastro
-//
-// Quem protege as páginas é o servidor (app.py); aqui só enviamos os
-// formulários para as rotas /login e /register do Flask.
-// ======================================================================
+// Autenticação demonstrativa para GitHub Pages.
+// A versão Flask continua usando o backend quando executada localmente.
+const CHAVE_USUARIOS = 'horizonte_usuarios';
+const CHAVE_SESSAO = 'horizonte_sessao';
 
-
-// ── NOTIFICAÇÃO ───────────────────────────────────────────────────────
-// Exibe uma mensagem (sucesso ou erro) na área de notificação da página.
-// A área é o elemento com id="areaNotificacao".
-function exibirNotificacao(mensagem, tipo = 'sucesso') {
-    const areaNotificacao = document.getElementById('areaNotificacao');
-    if (!areaNotificacao) return;
-
-    areaNotificacao.textContent = mensagem;
-    areaNotificacao.className = `notificacao ${tipo}`;
-    areaNotificacao.style.display = 'block';
-
-    // Esconde automaticamente depois de 3 segundos
-    clearTimeout(exibirNotificacao.temporizador);
-    exibirNotificacao.temporizador = setTimeout(() => {
-        areaNotificacao.style.display = 'none';
-    }, 3000);
+function urlRelativa(caminho) {
+    return new URL(caminho, document.baseURI).href;
 }
 
+function exibirNotificacao(mensagem, tipo = 'sucesso') {
+    const area = document.getElementById('areaNotificacao') || document.getElementById('notification');
+    if (!area) { window.alert(mensagem); return; }
+    area.textContent = mensagem;
+    area.className = `notificacao ${tipo}`;
+    area.style.display = 'block';
+    clearTimeout(exibirNotificacao.timer);
+    exibirNotificacao.timer = setTimeout(() => { area.style.display = 'none'; }, 3000);
+}
 
-// ── ALTERNAR VISIBILIDADE DO CAMPO (olho) ─────────────────────────────
-// Inicializa todos os botões "Mostrar / Ocultar" da página.
-// Cada botão usa data-toggle-visibility para saber qual input controlar.
+function lerUsuarios() {
+    try { return JSON.parse(localStorage.getItem(CHAVE_USUARIOS) || '[]'); }
+    catch (_) { return []; }
+}
+
+function salvarUsuarios(usuarios) {
+    localStorage.setItem(CHAVE_USUARIOS, JSON.stringify(usuarios));
+}
+
+function obterPerfil() {
+    return document.getElementById('perfilUsuario')?.value ||
+        (document.body.dataset.perfil === 'professor' ? 'professor' : 'aluno');
+}
+
+function redirecionar(caminho) {
+    window.location.href = urlRelativa(caminho);
+}
+
+// Botões de mostrar/ocultar senha e e-mail.
 document.querySelectorAll('[data-toggle-visibility]').forEach((botao) => {
-    const campoAlvo = document.getElementById(botao.dataset.toggleVisibility);
-    if (!campoAlvo) return;
-
+    const campo = document.getElementById(botao.dataset.toggleVisibility);
+    if (!campo) return;
     botao.addEventListener('click', () => {
-        // Se o campo está oculto (tipo = hiddenType), torna visível, e vice-versa
-        const estaOculto = campoAlvo.type === botao.dataset.hiddenType;
-        campoAlvo.type = estaOculto ? botao.dataset.visibleType : botao.dataset.hiddenType;
-
-        // Atualiza o texto e os atributos de acessibilidade do botão
-        botao.querySelector('span').textContent = estaOculto ? 'Ocultar' : 'Mostrar';
-        botao.setAttribute('aria-label', `${estaOculto ? 'Ocultar' : 'Mostrar'} ${botao.dataset.fieldLabel}`);
-        botao.setAttribute('aria-pressed', String(estaOculto));
+        const oculto = campo.type === botao.dataset.hiddenType;
+        campo.type = oculto ? botao.dataset.visibleType : botao.dataset.hiddenType;
+        const texto = botao.querySelector('span');
+        if (texto) texto.textContent = oculto ? 'Ocultar' : 'Mostrar';
+        botao.setAttribute('aria-label', `${oculto ? 'Ocultar' : 'Mostrar'} ${botao.dataset.fieldLabel || ''}`);
     });
 });
 
-// ── SELETOR DE PERFIL ─────────────────────────────────────────────────
-// Mantém o perfil escolhido no campo oculto.
+// Abas de aluno/professor.
 const campoPerfil = document.getElementById('perfilUsuario');
-
 document.querySelectorAll('.aba-perfil').forEach((aba) => {
     aba.addEventListener('click', () => {
-        const perfilSelecionado = aba.dataset.role;
-        if (campoPerfil) campoPerfil.value = perfilSelecionado;
-
-        document.querySelectorAll('.aba-perfil').forEach((outraAba) => {
-            const estaAtiva = outraAba === aba;
-            outraAba.classList.toggle('ativa', estaAtiva);
-            outraAba.setAttribute('aria-pressed', String(estaAtiva));
+        if (campoPerfil) campoPerfil.value = aba.dataset.role || 'aluno';
+        document.querySelectorAll('.aba-perfil').forEach((item) => {
+            const ativa = item === aba;
+            item.classList.toggle('ativa', ativa);
+            item.setAttribute('aria-pressed', String(ativa));
         });
-
     });
 });
 
-
-// ── ENVIO JSON PARA O SERVIDOR ────────────────────────────────────────
-// Envia um objeto como JSON e retorna { ok, dados }.
-// Nunca lança exceção: se a resposta não for JSON, dados = {}.
-async function enviarJSON(url, payload) {
-    const resposta = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-    });
-    let dados = {};
-    try { dados = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
-    return { ok: resposta.ok, dados };
-}
-
-// ── VALIDAÇÃO DE SENHAS ───────────────────────────────────────────────
-// Verifica se a senha tem 8 caracteres e, quando há confirmação, se coincidem.
-// Retorna true se tudo estiver certo, false caso contrário.
-function validarSenhas() {
-    const senha            = document.getElementById('senha').value;
-    const campoCofirmacao  = document.getElementById('confirmacaoSenha');
-
-    if (senha.length < 8) {
-        exibirNotificacao('A senha precisa ter ao menos 8 caracteres', 'erro');
-        return false;
-    }
-    if (campoCofirmacao && senha !== campoCofirmacao.value) {
-        exibirNotificacao('As senhas não coincidem', 'erro');
-        return false;
-    }
-    return true;
-}
-
-
-// ── FORMULÁRIO DE CADASTRO ────────────────────────────────────────────
-const formularioRegistro = document.getElementById('formularioRegistro');
+const formularioRegistro = document.getElementById('formularioRegistro') || document.getElementById('registerForm');
 if (formularioRegistro) {
-    formularioRegistro.addEventListener('submit', async (evento) => {
+    formularioRegistro.addEventListener('submit', (evento) => {
         evento.preventDefault();
-        if (!validarSenhas()) return;
-
-        try {
-            const { ok, dados } = await enviarJSON('/register', {
-                name:            document.getElementById('nomeCompleto').value.trim(),
-                email:           document.getElementById('email').value.trim(),
-                gender:          document.getElementById('tratamentoUsuario').value,
-                password:        document.getElementById('senha').value,
-                confirmPassword: document.getElementById('confirmacaoSenha').value,
-                role:            campoPerfil ? campoPerfil.value : 'aluno'
-            });
-
-            if (ok) {
-                exibirNotificacao(dados.message || 'Cadastro realizado!');
-                // Aguarda a notificação antes de abrir o portal autenticado.
-                setTimeout(() => {
-                    window.location.href = dados.redirect || '/index_alunos.html';
-                }, 800);
-            } else {
-                exibirNotificacao(dados.error || 'Não foi possível cadastrar', 'erro');
-            }
-
-        } catch (erro) {
-            exibirNotificacao(
-                'Não foi possível cadastrar. Execute o projeto com "python app.py" e acesse http://localhost:5000.',
-                'erro'
-            );
-            console.error('Erro no cadastro:', erro);
+        const nome = (document.getElementById('nomeCompleto') || document.getElementById('name'))?.value.trim();
+        const email = document.getElementById('email')?.value.trim().toLowerCase();
+        const senha = (document.getElementById('senha') || document.getElementById('password'))?.value || '';
+        const confirmacao = (document.getElementById('confirmacaoSenha') || document.getElementById('confirmPassword'))?.value || '';
+        const role = obterPerfil();
+        if (!nome || !email || senha.length < 8 || senha !== confirmacao) {
+            exibirNotificacao(senha.length < 8 ? 'A senha precisa ter ao menos 8 caracteres.' : 'Confira os campos e confirme a senha.', 'erro');
+            return;
         }
+        const usuarios = lerUsuarios();
+        if (usuarios.some((usuario) => usuario.email === email && usuario.role === role)) {
+            exibirNotificacao('Este e-mail já está cadastrado para esse perfil.', 'erro');
+            return;
+        }
+        usuarios.push({ nome, email, senha, role, gender: document.getElementById('tratamentoUsuario')?.value || 'neutro' });
+        salvarUsuarios(usuarios);
+        exibirNotificacao('Cadastro realizado! Agora faça login.');
+        setTimeout(() => redirecionar(role === 'professor' ? 'login_professor.html' : 'login_aluno.html'), 700);
     });
 }
 
-
-// ── FORMULÁRIO DE LOGIN ───────────────────────────────────────────────
-const formularioLogin = document.getElementById('formularioLogin');
+const formularioLogin = document.getElementById('formularioLogin') || document.getElementById('loginForm');
 if (formularioLogin) {
-    formularioLogin.addEventListener('submit', async (evento) => {
+    formularioLogin.addEventListener('submit', (evento) => {
         evento.preventDefault();
-
-        try {
-            const { ok, dados } = await enviarJSON('/login', {
-                email:    document.getElementById('email').value.trim(),
-                password: document.getElementById('senha').value,
-                role:     campoPerfil ? campoPerfil.value : 'aluno'
-            });
-
-            if (ok) {
-                exibirNotificacao(dados.message || 'Login realizado!');
-                // Aguarda 0,8 s e abre a página inicial do perfil autenticado.
-                setTimeout(() => {
-                    window.location.href = dados.redirect || '/index_alunos.html';
-                }, 800);
-            } else {
-                exibirNotificacao(dados.error || 'E-mail ou senha incorretos', 'erro');
-            }
-
-        } catch (erro) {
-            exibirNotificacao(
-                'Não foi possível entrar. Execute o projeto com "python app.py" e acesse http://localhost:5000.',
-                'erro'
-            );
-            console.error('Erro no login:', erro);
-        }
+        const email = document.getElementById('email')?.value.trim().toLowerCase();
+        const senha = (document.getElementById('senha') || document.getElementById('password'))?.value || '';
+        const role = obterPerfil();
+        const usuario = lerUsuarios().find((item) => item.email === email && item.senha === senha && item.role === role);
+        if (!usuario) { exibirNotificacao('E-mail, senha ou perfil incorreto.', 'erro'); return; }
+        localStorage.setItem(CHAVE_SESSAO, JSON.stringify({ email: usuario.email, nome: usuario.nome, role: usuario.role, gender: usuario.gender }));
+        exibirNotificacao('Login realizado com sucesso!');
+        setTimeout(() => redirecionar(role === 'professor' ? 'index_professor.html' : 'index_alunos.html'), 500);
     });
 }
