@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Portal educacional com conteúdo de História, Filosofia, Sociologia e Geografia">
+    <meta name="keywords" content="educacional, história, filosofia, sociologia, geografia, educação">
+    <meta name="author" content="Horizonte Educacional">
+    <meta name="robots" content="index, follow">
+    <title>Horizonte Educacional - Área do Professor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+
+<body data-perfil="professor">
+
+    <!-- =============================================
+         CABEÇALHO — barra fixa no topo da página
+         ============================================= -->
+    <header>
+        <div id="cabecalho">
+            <!-- Logo / marca do portal -->
+            <div id="logo">
+                <a href="#inicio" aria-label="Ir para o início">
+                    <img src="imagem/logotipo.png" alt="Horizonte Educacional" class="logo-imagem" width="240" height="60">
+                </a>
+            </div>
+
+            <!-- Navegação principal -->
+            <nav class="barra-navegacao" aria-label="Navegação principal">
+                <ul class="menu-links">
+                    <li><a href="#inicio"><i class="bi bi-house-door-fill"></i> Início</a></li>
+                    <li><a href="#historia"><i class="bi bi-bank"></i> História</a></li>
+                    <li><a href="#filosofia"><i class="bi bi-lightbulb-fill"></i> Filosofia</a></li>
+                    <li><a href="#sociologia"><i class="bi bi-people-fill"></i> Sociologia</a></li>
+                    <li><a href="#geografia"><i class="bi bi-globe-americas"></i> Geografia</a></li>
+                    <li><a class="link-area-professor" href="#areaProfessor"><i class="bi bi-person-badge"></i> Área do professor</a></li>
+                    
+                </ul>
+            </nav>
+
+            <!-- Ações do cabeçalho: busca + nome do usuário + botão sair -->
+            <div class="acoes-cabecalho">
+
+                <!-- Campo de busca com resultados dinâmicos -->
+                <div class="caixa-busca">
+                    <i class="bi bi-search icone-busca"></i>
+                    <input
+                        type="text"
+                        id="campoBusca"
+                        placeholder="Buscar conteúdo..."
+                        aria-label="Campo de busca"
+                        autocomplete="off"
+                        role="combobox"
+                        aria-expanded="false"
+                        aria-controls="resultadosBusca"
+                        aria-autocomplete="list"
+                    >
+                    <div class="lista-resultados-busca" id="resultadosBusca" role="listbox" aria-label="Resultados da busca"></div>
+                </div>
+
+                <!-- Nome do usuário logado (preenchido pelo JS) -->
+                <span id="nomeUsuario" class="nome-usuario" aria-live="polite"></span>
+
+                <!-- Botão para encerrar sessão -->
+                <button id="botaoSair" class="btn-sair">
+                    <i class="bi bi-box-arrow-right"></i> Sair
+                </button>
+            </div>
+
+            <!-- Botão hambúrguer (visível apenas no celular) -->
+            <button class="btn-menu-mobile" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =============================================
+         CONTEÚDO PRINCIPAL
+         ============================================= -->
+    <main>
+
+        <!-- ── SEÇÃO HERO (banner de boas-vindas) ──────── -->
+        <section id="inicio" class="secao-hero">
+            <div class="hero-sobreposicao"></div>
+            <div class="hero-conteudo">
+                <span class="hero-etiqueta">
+                    <i class="bi bi-mortarboard-fill"></i> Horizonte Educacional
+                </span>
+                <h1>Explore o Mundo <span class="destaque">Educacional</span></h1>
+                <p>Leituras guiadas de História, Filosofia, Sociologia e Geografia Humana</p>
+                <div class="hero-botoes">
+                    <a href="#categorias" class="btn btn-hero-principal">
+                        <i class="bi bi-rocket-takeoff"></i> Começar Agora
+                    </a>
+                </div>
+                <div class="hero-estatisticas">
+                    <div class="estatistica"><strong>4</strong><span>Áreas de estudo</span></div>
+                    <div class="divisor-estatistica"></div>
+                    <div class="estatistica"><strong>Grátis</strong><span>Acesso</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SEÇÃO CATEGORIAS (cards das disciplinas) ── -->
+        <section id="categorias" class="secao-categorias">
+            <div class="cabecalho-secao">
+                <span class="etiqueta-secao">Estude com a gente</span>
+                <h2>Áreas de Estudo</h2>
+                <p class="descricao-secao">Escolha sua disciplina e mergulhe no conhecimento</p>
+            </div>
+
+            <div class="grade-cartoes">
+
+                <!-- Cartão: História -->
+                <div class="cartao card shadow-sm" id="historia">
+                    <div class="cartao-imagem" data-carrossel-materia="historia" role="group" aria-label="Imagens de História">
+                        <img src="imagem/historia.jpg" alt="História - da Antiguidade ao Mundo Contemporâneo">
+                        <div class="cartao-icone"><i class="bi bi-bank"></i></div>
+                    </div>
+                    <div class="cartao-corpo">
+                        <h3>História</h3>
+                        <p>Da Antiguidade ao Mundo Contemporâneo</p>
+                        <ul>
+                            <li><button class="link-topico" data-reading="historia-antiga"><i class="bi bi-chevron-right"></i> História Antiga</button></li>
+                            <li><button class="link-topico" data-reading="historia-medieval"><i class="bi bi-chevron-right"></i> História Medieval</button></li>
+                            <li><button class="link-topico" data-reading="historia-moderna"><i class="bi bi-chevron-right"></i> História Moderna</button></li>
+                            <li><button class="link-topico" data-reading="historia-contemporanea"><i class="bi bi-chevron-right"></i> História Contemporânea</button></li>
+                        </ul>
+                        <a href="#historia" class="cartao-btn">Explorar <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Cartão: Filosofia -->
+                <div class="cartao card shadow-sm" id="filosofia">
+                    <div class="cartao-imagem" data-carrossel-materia="filosofia" role="group" aria-label="Imagens de Filosofia">
+                        <img src="imagem/filosofia.jpg" alt="Filosofia - Pensamento e Reflexão Crítica">
+                        <div class="cartao-icone"><i class="bi bi-lightbulb-fill"></i></div>
+                    </div>
+                    <div class="cartao-corpo">
+                        <h3>Filosofia</h3>
+                        <p>Pensamento e Reflexão Crítica</p>
+                        <ul>
+                            <li><button class="link-topico" data-reading="filosofia-antiga"><i class="bi bi-chevron-right"></i> Filosofia Antiga</button></li>
+                            <li><button class="link-topico" data-reading="etica-moral"><i class="bi bi-chevron-right"></i> Ética e Moral</button></li>
+                            <li><button class="link-topico" data-reading="filosofia-politica"><i class="bi bi-chevron-right"></i> Filosofia Política</button></li>
+                            <li><button class="link-topico" data-reading="filosofia-contemporanea"><i class="bi bi-chevron-right"></i> Filosofia Contemporânea</button></li>
+                        </ul>
+                        <a href="#filosofia" class="cartao-btn">Explorar <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Cartão: Sociologia -->
+                <div class="cartao card shadow-sm" id="sociologia">
+                    <div class="cartao-imagem" data-carrossel-materia="sociologia" role="group" aria-label="Imagens de Sociologia">
+                        <img src="imagem/sociologia.jpg" alt="Sociologia - Compreendendo a Sociedade">
+                        <div class="cartao-icone"><i class="bi bi-people-fill"></i></div>
+                    </div>
+                    <div class="cartao-corpo">
+                        <h3>Sociologia</h3>
+                        <p>Compreendendo a Sociedade</p>
+                        <ul>
+                            <li><button class="link-topico" data-reading="teoria-sociologica"><i class="bi bi-chevron-right"></i> Teoria Sociológica</button></li>
+                            <li><button class="link-topico" data-reading="movimentos-sociais"><i class="bi bi-chevron-right"></i> Movimentos Sociais</button></li>
+                            <li><button class="link-topico" data-reading="cultura-sociedade"><i class="bi bi-chevron-right"></i> Cultura e Sociedade</button></li>
+                            <li><button class="link-topico" data-reading="desigualdade-social"><i class="bi bi-chevron-right"></i> Desigualdade Social</button></li>
+                        </ul>
+                        <a href="#sociologia" class="cartao-btn">Explorar <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Cartão: Geografia -->
+                <div class="cartao card shadow-sm" id="geografia">
+                    <div class="cartao-imagem" data-carrossel-materia="geografia" role="group" aria-label="Imagens de Geografia">
+                        <img src="imagem/geografia.jpg" alt="Geografia Humana - Espaço e Sociedade">
+                        <div class="cartao-icone"><i class="bi bi-globe-americas"></i></div>
+                    </div>
+                    <div class="cartao-corpo">
+                        <h3>Geografia Humana</h3>
+                        <p>Espaço, Sociedade e Território</p>
+                        <ul>
+                            <li><button class="link-topico" data-reading="geografia-populacao"><i class="bi bi-chevron-right"></i> Geografia da População</button></li>
+                            <li><button class="link-topico" data-reading="urbanizacao-cidades"><i class="bi bi-chevron-right"></i> Urbanização e Cidades</button></li>
+                            <li><button class="link-topico" data-reading="geopolitica-mundial"><i class="bi bi-chevron-right"></i> Geopolítica Mundial</button></li>
+                            <li><button class="link-topico" data-reading="desenvolvimento-desigualdades"><i class="bi bi-chevron-right"></i> Desenvolvimento e Desigualdades</button></li>
+                        </ul>
+                        <a href="#geografia" class="cartao-btn">Explorar <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ── SEÇÃO LEITURA (texto ampliado em formato A4) ── -->
+        <section id="leitura" class="secao-leitura">
+            <div class="cabecalho-secao">
+                <span class="etiqueta-secao">Leitura ampliada</span>
+                <h2 id="tituloDaLeitura">Escolha um tema para começar</h2>
+                <p class="descricao-secao">Clique em qualquer tópico acima para abrir o texto completo em formato A4.</p>
+            </div>
+
+            <!-- Área onde o texto do tópico selecionado aparece -->
+            <article class="pagina-leitura" id="paginaLeitura" aria-live="polite">
+                <p class="texto-inicial-leitura">O texto selecionado aparecerá aqui.</p>
+            </article>
+
+            <!-- Botões de exportação do texto -->
+            <div class="acoes-leitura" aria-label="Exportar leitura">
+                <button class="btn" id="botaoBaixar" type="button" disabled>
+                    <i class="bi bi-download"></i> Baixar para o computador
+                </button>
+                <button class="btn" id="botaoImprimir" type="button" disabled>
+                    <i class="bi bi-printer"></i> Imprimir / salvar em PDF
+                </button>
+            </div>
+        </section>
+
+        <!-- ── SEÇÃO RECURSOS EDUCACIONAIS ───────────────── -->
+        <section id="recursos" class="secao-recursos">
+            <div class="cabecalho-secao">
+                <span class="etiqueta-secao">Ferramentas</span>
+                <h2>Recursos Educacionais</h2>
+                <p class="descricao-secao">Tudo que você precisa para aprender em um só lugar</p>
+            </div>
+            <div class="grade-recursos">
+                <div class="item-recurso card shadow-sm">
+                    <div class="icone-recurso"><i class="bi bi-file-earmark-text"></i></div>
+                    <h3>Materiais Didáticos</h3>
+                    <p>Acesse conteúdos completos e atualizados</p>
+                </div>
+                <div class="item-recurso card shadow-sm">
+                    <div class="icone-recurso"><i class="bi bi-pencil-square"></i></div>
+                    <h3>Exercícios</h3>
+                    <p>Pratique com questões de vestibular</p>
+                </div>
+                <div class="item-recurso card shadow-sm">
+                    <div class="icone-recurso"><i class="bi bi-clock-history"></i></div>
+                    <h3>Linha do Tempo</h3>
+                    <p>Visualize eventos históricos importantes</p>
+                </div>
+                <div class="item-recurso card shadow-sm">
+                    <div class="icone-recurso"><i class="bi bi-mortarboard"></i></div>
+                    <h3>Biografias</h3>
+                    <p>Conheça grandes pensadores</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SEÇÃO LINHA DO TEMPO ───────────────────────── -->
+        <section id="linha-do-tempo" class="secao-linha-tempo">
+            <h2>Linha do Tempo Histórica</h2>
+            <div class="container-linha-tempo">
+
+                <!-- Controles para navegar entre as eras históricas -->
+                <div class="controles-linha-tempo">
+                    <button class="btn" id="botaoEraAnterior">Anterior</button>
+                    <select id="seletorEra">
+                        <option value="antiga">Idade Antiga</option>
+                        <option value="media">Idade Média</option>
+                        <option value="moderna">Idade Moderna</option>
+                        <option value="contemporanea">Idade Contemporânea</option>
+                    </select>
+                    <button class="btn" id="botaoProximaEra">Próximo</button>
+                </div>
+
+                <!-- Lista de eventos da era selecionada (preenchida pelo JS) -->
+                <div class="lista-linha-tempo" id="listaLinhaDoTempo"></div>
+            </div>
+        </section>
+
+        
+        <section id="areaProfessor" class="secao-professor">
+            <div class="cabecalho-bloco-professor">
+                <span class="etiqueta-secao">Espaço docente</span>
+                <h2>Área do professor</h2>
+                <p>Acesse recursos para suas aulas, materiais complementares e conteúdos do portal.</p>
+            </div>
+            <nav class="navegacao-area-professor" aria-label="Atalhos da área do professor">
+                <a href="#materiaisProfessor"><i class="bi bi-journal-bookmark" aria-hidden="true"></i> Materiais e listas</a>
+                <a href="#planosProfessor"><i class="bi bi-grid" aria-hidden="true"></i> Planos</a>
+                <a href="#provaSocialProfessor"><i class="bi bi-people" aria-hidden="true"></i> Comunidade e parcerias</a>
+            </nav>
+
+            <!-- Bloco 2: materiais complementares e listas avulsas -->
+            <section id="materiaisProfessor" class="bloco-area-professor">
+                <div class="cabecalho-bloco-professor">
+                    <span class="etiqueta-secao">Conteúdo e recursos</span>
+                    <h3>Materiais complementares e listas</h3>
+                    <p>Amostras para conhecer os formatos. Os valores exibidos são demonstrativos e não geram cobrança.</p>
+                </div>
+
+                <div class="grade-materiais-professor">
+                    <article class="cartao-material-professor card shadow-sm">
+                        <span class="etiqueta-material etiqueta-gratis badge">Amostra gratuita</span>
+                        <h4>Roteiro de análise de fontes históricas</h4>
+                        <p>Um guia demonstrativo para observar autoria, contexto e perspectiva de diferentes fontes.</p>
+                        <div class="detalhes-material">
+                            <span><i class="bi bi-book" aria-hidden="true"></i> História</span>
+                            <span>Conteúdo demonstrativo</span>
+                        </div>
+                        <button class="btn btn-secundario botao-baixar-lista" type="button" data-lista="roteiro-fontes">
+                            <i class="bi bi-download" aria-hidden="true"></i> Baixar PDF
+                        </button>
+                    </article>
+
+                    <article class="cartao-material-professor cartao-lista-premium card shadow-sm">
+                        <span class="etiqueta-material etiqueta-premium badge">Lista avulsa · demonstração</span>
+                        <h4>Brasil República: conceitos e processos</h4>
+                        <p>Questões de amostra com gabarito comentado para revisão de História.</p>
+                        <div class="detalhes-material">
+                            <span><i class="bi bi-bank" aria-hidden="true"></i> História</span>
+                            <strong class="preco-demonstrativo">R$ 9,90 <small>exemplo</small></strong>
+                        </div>
+                        <div class="acoes-material">
+                            <button class="btn btn-dourado botao-comprar-lista" type="button" data-produto="Brasil República">
+                                Comprar lista
+                            </button>
+                            <button class="btn btn-secundario botao-baixar-lista" type="button" data-lista="brasil-republica">
+                                Baixar amostra em PDF
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="cartao-material-professor cartao-lista-premium card shadow-sm">
+                        <span class="etiqueta-material etiqueta-premium badge">Lista avulsa · demonstração</span>
+                        <h4>Iluminismo e Filosofia Política</h4>
+                        <p>Questões de amostra sobre ideias políticas, cidadania e organização social.</p>
+                        <div class="detalhes-material">
+                            <span><i class="bi bi-lightbulb-fill" aria-hidden="true"></i> Filosofia</span>
+                            <strong class="preco-demonstrativo">R$ 19,90 <small>exemplo</small></strong>
+                        </div>
+                        <div class="acoes-material">
+                            <button class="btn btn-dourado botao-comprar-lista" type="button" data-produto="Iluminismo e Filosofia Política">
+                                Comprar lista
+                            </button>
+                            <button class="btn btn-secundario botao-baixar-lista" type="button" data-lista="iluminismo">
+                                Baixar amostra em PDF
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Bloco 3: comparação de planos sem contratação real -->
+            <section id="planosProfessor" class="bloco-area-professor">
+                <div class="cabecalho-bloco-professor">
+                    <span class="etiqueta-secao">Acesso aos materiais</span>
+                    <h3>Planos de assinatura</h3>
+                    <p>Planos demonstrativos para escolas e aulas particulares de Fundamental II, Ensino Médio e EJA.</p>
+                </div>
+
+                <div class="grade-planos-professor">
+                    <article class="cartao-plano-professor card shadow-sm">
+                        <h4>Gratuito</h4>
+                        <p class="preco-plano">R$ 0 <small>sempre</small></p>
+                        <ul>
+                            <li>Conteúdos abertos do portal</li>
+                            <li>Amostras de materiais</li>
+                        </ul>
+                        <a class="btn btn-secundario" href="#categorias">Continuar explorando</a>
+                    </article>
+
+                    <article class="cartao-plano-professor plano-professor-destaque card shadow-sm">
+                        <span class="etiqueta-premium badge rounded-pill">Premium · demonstração</span>
+                        <h4>Assinante Pro</h4>
+                        <p class="preco-plano">R$ 19,90 <small>por mês</small></p>
+                        <ul>
+                            <li>Materiais complementares</li>
+                            <li>Listas e gabaritos comentados</li>
+                            <li>Atualizações periódicas</li>
+                        </ul>
+                        <button class="btn btn-dourado botao-plano-demonstracao" type="button" data-plano="Assinante Pro">
+                        Testar contratação
+                        </button>
+                    </article>
+
+                    <article class="cartao-plano-professor card shadow-sm">
+                        <h4>Escolas e aulas particulares</h4>
+                        <ul class="valores-plano-escola">
+                            <li><strong>Trimestral:</strong> R$ 249,90</li>
+                            <li><strong>Anual:</strong> R$ 799,90</li>
+                            <li><strong>Personalizado:</strong> sob consulta</li>
+                        </ul>
+                        <ul>
+                            <li>Acesso pensado para turmas</li>
+                            <li>Materiais de apoio pedagógico</li>
+                            <li>Contato institucional</li>
+                        </ul>
+                        <button class="btn btn-secundario botao-proposta-escola" type="button">
+                            Solicitar proposta
+                        </button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Bloco 4: espaços reservados para prova social e parcerias reais -->
+            <section id="provaSocialProfessor" class="bloco-area-professor">
+                <div class="cabecalho-bloco-professor">
+                    <span class="etiqueta-secao">Comunidade e parcerias</span>
+                    <h3>Depoimentos e parcerias educacionais</h3>
+                    <p>Relatos e fotos ilustrativos para demonstração; não representam avaliações reais de estudantes ou docentes.</p>
+                </div>
+
+                <div class="carrossel-depoimentos" aria-label="Depoimentos demonstrativos">
+                    <div class="lista-depoimentos" id="listaDepoimentos" aria-live="polite">
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-01.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Ensino Fundamental II</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>As explicações diretas e os exercícios me ajudam a revisar os conteúdos de História.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-02.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Ensino Fundamental II</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>Consigo entender melhor os temas quando leio os resumos antes de estudar para a prova.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-03.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Ensino Médio</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>Os materiais me ajudam a organizar os assuntos e relacionar História e Filosofia.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-04.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Educação de Jovens e Adultos</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>As leituras complementam as aulas e ajudam a revisar os temas para o Enem.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-05.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Educação de Jovens e Adultos (EJA)</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>No meu ritmo e no horário que consigo estudar, retomo os temas com calma.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-06.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Educação de Jovens e Adultos (EJA)</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>Os conteúdos organizados me ajudam a conciliar estudo, trabalho e rotina.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-07.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Aulas particulares · Fundamental II</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>Nas aulas particulares, os exemplos e atividades acompanham os conteúdos que estou estudando.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-08.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Aulas particulares · Ensino Médio</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>Revisar os temas com explicações focadas me ajuda a me preparar para atividades e avaliações.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-09.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Estudante demonstrativo</strong><span>Aulas particulares · EJA</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>A combinação de leitura e conversa deixa o estudo mais organizado, mesmo com a rotina corrida.</p>
+                        </article>
+                        <article class="cartao-depoimento card shadow-sm" data-depoimento hidden>
+                            <div class="cabecalho-depoimento">
+                                <img src="imagem/depoimentos/depoimento-10.jpg" alt="Foto ilustrativa de pessoa, imagem Unsplash" width="72" height="72" loading="lazy">
+                                <div><strong>Professor particular demonstrativo</strong><span>Educacional · Fundamental II, Médio e EJA</span></div>
+                            </div>
+                            <i class="bi bi-quote" aria-hidden="true"></i>
+                            <p>Os materiais servem de apoio para complementar as aulas particulares de História, Filosofia, Sociologia e Geografia.</p>
+                        </article>
+                    </div>
+                    <div class="controles-depoimentos">
+                        <button class="btn btn-secundario" id="botaoDepoimentoAnterior" type="button" aria-label="Ver depoimento anterior">
+                            <i class="bi bi-chevron-left" aria-hidden="true"></i> Anterior
+                        </button>
+                        <span id="indicadorDepoimento" aria-live="polite">1 de 10</span>
+                        <button class="btn btn-secundario" id="botaoProximoDepoimento" type="button" aria-label="Ver próximo depoimento">
+                            Próximo <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="escolas-parceiras">
+                    <div>
+                        <span class="etiqueta-secao">Instituições demonstrativas</span>
+                        <h4>Exemplos alinhados ao público do portal</h4>
+                        <p>Os 30 nomes abaixo são fictícios e ilustram escolas e serviços para Fundamental II, Ensino Médio, EJA e aulas particulares. Não representam parcerias reais.</p>
+                    </div>
+                    <div class="grade-escolas-parceiras">
+                        <article class="instituicao-demonstrativa"><strong>Colégio Veredas do Saber</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Horizonte Cidadão</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Instituto Caminhos da Aprendizagem</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Centro Educacional Ponte do Conhecimento</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Raízes do Futuro</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Colégio Trilhas Educacionais</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Sementes do Saber</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Instituto Aprender e Conviver</strong><span>Ensino Fundamental II</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Colégio Estação do Conhecimento</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Projeto Horizonte</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Instituto Jovens em Movimento</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Centro Educacional Rumo ao Futuro</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Colégio Vozes e Ideias</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Conexão Educacional</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Instituto Saber em Debate</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Colégio Nova Perspectiva</strong><span>Ensino Médio</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Centro Educacional Recomeçar</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Segunda Jornada</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Instituto Aprender Sempre</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Centro de Estudos Novos Caminhos</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Escola Cidadania e Saber</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Núcleo Educacional Tempo de Aprender</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Centro de Formação Horizontes</strong><span>EJA</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Aulas Particulares Educação em Foco</strong><span>Atendimento particular</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Tutoria Caminhos do Estudo</strong><span>Atendimento particular</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Espaço Aprender com História</strong><span>Atendimento particular</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Acompanhamento Saber e Filosofia</strong><span>Atendimento particular</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Tutoria Rumo à Aprovação</strong><span>Atendimento particular</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Aulas Particulares Estudo Orientado</strong><span>Atendimento particular</span></article>
+                        <article class="instituicao-demonstrativa"><strong>Centro de Apoio Aprender no Meu Ritmo</strong><span>Atendimento particular</span></article>
+                    </div>
+                    <div class="controles-instituicoes" role="group" aria-label="Controles do carrossel de instituições">
+                        <button class="btn btn-secundario" id="botaoInstituicaoAnterior" type="button" aria-label="Mostrar instituições anteriores">
+                            <i class="bi bi-chevron-left" aria-hidden="true"></i> Anterior
+                        </button>
+                        <span id="indicadorInstituicoes" aria-live="polite">1-4 de 30</span>
+                        <button class="btn btn-secundario" id="botaoInstituicaoProxima" type="button" aria-label="Mostrar próximas instituições">
+                            Próximas <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-secundario" id="botaoPausarInstituicoes" type="button" aria-pressed="false">
+                            Pausar
+                        </button>
+                        <span class="texto-rotacao-instituicoes">Avanço automático a cada 4 segundos</span>
+                    </div>
+                    <button class="btn btn-dourado botao-proposta-escola" type="button">
+                        <i class="bi bi-building" aria-hidden="true"></i> Quero conhecer uma proposta
+                    </button>
+                </div>
+            </section>
+        </section>
+
+        <dialog id="modalAssinatura" class="modal-professor modal-assinatura" aria-labelledby="tituloModalAssinatura">
+            <div class="cabecalho-modal-professor">
+                <div>
+                    <span class="etiqueta-secao">Ambiente de teste</span>
+                    <h2 id="tituloModalAssinatura">Assinante Pro</h2>
+                </div>
+                <button class="botao-fechar-modal" id="botaoFecharModalAssinatura" type="button" aria-label="Fechar contratação de teste">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p class="preco-plano">R$ 19,90 <small>por mês</small></p>
+            <p>Simulação de contratação: nenhum pagamento real será processado e nenhum e-mail será enviado.</p>
+            <form id="formAssinaturaTeste">
+                <div class="mb-3">
+                    <label class="form-label" for="emailAssinaturaTeste">E-mail para teste</label>
+                    <input class="form-control" id="emailAssinaturaTeste" name="email" type="email" value="teste@example.com" autocomplete="email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="metodoPagamentoTeste">Forma de pagamento para simular</label>
+                    <select class="form-select" id="metodoPagamentoTeste" name="metodoPagamento" required>
+                        <option value="" selected disabled>Selecione uma opção</option>
+                        <option value="Pix">Pix (teste)</option>
+                        <option value="Cartão de crédito">Cartão de crédito (teste)</option>
+                        <option value="Boleto">Boleto (teste)</option>
+                    </select>
+                </div>
+                <p id="resultadoAssinaturaTeste" role="status" aria-live="polite"></p>
+                <button class="btn btn-dourado" type="submit">Simular contratação</button>
+            </form>
+        </dialog>
+
+        <dialog id="modalPropostaEscola" class="modal-professor modal-proposta-escola" aria-labelledby="tituloModalPropostaEscola">
+            <div class="cabecalho-modal-professor">
+                <div>
+                    <span class="etiqueta-secao">Escolas e aulas particulares</span>
+                    <h2 id="tituloModalPropostaEscola">Solicitar proposta</h2>
+                </div>
+                <button class="botao-fechar-modal" id="botaoFecharModalPropostaEscola" type="button" aria-label="Fechar formulário de proposta">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p>Use dados fictícios para testar. A solicitação será enviada à caixa do Mailtrap Sandbox e não será entregue a um destinatário real.</p>
+            <form id="formPropostaEscola">
+                <div class="mb-3">
+                    <label class="form-label" for="nomeInstituicao">Escola, instituição ou estudante</label>
+                    <input class="form-control" id="nomeInstituicao" name="instituicao" type="text" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="responsavelInstituicao">Nome do responsável ou contato</label>
+                    <input class="form-control" id="responsavelInstituicao" name="responsavel" type="text" autocomplete="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="emailInstituicao">E-mail para contato</label>
+                    <input class="form-control" id="emailInstituicao" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="publicoModalidadeInstituicao">Público atendido ou modalidade</label>
+                    <select class="form-select" id="publicoModalidadeInstituicao" name="publico" required>
+                        <option value="" selected disabled>Selecione uma opção</option>
+                        <option>Ensino Fundamental II</option>
+                        <option>Ensino Médio</option>
+                        <option>Educação de Jovens e Adultos (EJA)</option>
+                        <option>Aulas particulares — Ensino Fundamental II</option>
+                        <option>Aulas particulares — Ensino Médio</option>
+                        <option>Aulas particulares — EJA</option>
+                        <option>Proposta para mais de um público acima</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="quantidadeEstudantes">Número aproximado de estudantes</label>
+                    <input class="form-control" id="quantidadeEstudantes" name="estudantes" type="number" min="1" step="1" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="periodoContratoEscola">Período de contratação</label>
+                    <select class="form-select" id="periodoContratoEscola" name="periodo" required>
+                        <option value="" selected disabled>Selecione um período</option>
+                        <option value="Trimestral — R$ 249,90">Trimestral — R$ 249,90</option>
+                        <option value="Anual — R$ 799,90">Anual — R$ 799,90</option>
+                        <option value="Personalizado — sob consulta">Personalizado — sob consulta</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="observacoesInstituicao">Observações (opcional)</label>
+                    <textarea class="form-control" id="observacoesInstituicao" name="observacoes" rows="3"></textarea>
+                </div>
+                <p class="aviso-proposta-escola">Valores demonstrativos. Nenhum pagamento será realizado ao enviar esta solicitação.</p>
+                <p id="resultadoPropostaEscola" role="status" aria-live="polite"></p>
+                <button class="btn btn-dourado" type="submit">Enviar solicitação de teste</button>
+            </form>
+        </dialog>
+        
+
+    </main>
+
+    <!-- =============================================
+         RODAPÉ
+         ============================================= -->
+    <footer>
+        <div class="conteudo-rodape">
+
+            <!-- Coluna: marca + redes sociais -->
+            <div class="coluna-rodape marca-rodape">
+                <img src="imagem/logotipo.png" alt="Horizonte Educacional" class="logo-rodape">
+                <p>Seu guia completo de estudos educacionais. Aprender nunca foi tão acessível.</p>
+                <div class="redes-sociais" aria-label="Redes sociais do portal">
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram" title="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://web.whatsapp.com/send?text=Olá%20do%20Horizonte%20Educacional!" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Facebook" title="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Coluna: links das disciplinas -->
+            <div class="coluna-rodape">
+                <h4><i class="bi bi-book"></i> Disciplinas</h4>
+                <ul>
+                    <li><a href="#historia"><i class="bi bi-chevron-right"></i> História</a></li>
+                    <li><a href="#filosofia"><i class="bi bi-chevron-right"></i> Filosofia</a></li>
+                    <li><a href="#sociologia"><i class="bi bi-chevron-right"></i> Sociologia</a></li>
+                    <li><a href="#geografia"><i class="bi bi-chevron-right"></i> Geografia Humana</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna: links úteis -->
+            <div class="coluna-rodape">
+                <h4><i class="bi bi-link-45deg"></i> Links Úteis</h4>
+                <ul>
+                    <li><a href="#inicio"><i class="bi bi-chevron-right"></i> Início</a></li>
+                    <li><a href="#linha-do-tempo"><i class="bi bi-chevron-right"></i> Linha do Tempo</a></li>
+                    <li><a href="#sobre"><i class="bi bi-chevron-right"></i> Sobre nós</a></li>
+                    <li><a href="#modalSugestoes" data-abrir-sugestoes>
+                        <i class="bi bi-envelope"></i> Enviar sugestões
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bloco "Sobre nós" expansível -->
+        <details id="sobre" class="sobre-nos">
+            <summary>
+                <i class="bi bi-mortarboard-fill"></i> Sobre nós
+                <i class="bi bi-chevron-down icone-expandir" aria-hidden="true"></i>
+            </summary>
+            <p>O Horizonte Educacional é uma proposta educacional para apoiar estudantes no estudo de História, Filosofia, Sociologia e Geografia Humana. O site reúne leituras organizadas, linha do tempo, busca e materiais para leitura offline, aproximando tecnologia e aprendizagem crítica.</p>
+        </details>
+
+        <!-- Faixa inferior do rodapé com copyright -->
+        <div class="faixa-direitos">
+            <p>&copy; 2026 Horizonte Educacional. Todos os direitos reservados. | Feito com <i class="bi bi-heart-fill icone-coracao"></i> para a educação</p>
+        </div>
+    </footer>
+
+    <dialog id="modalSugestoes" class="modal-professor" aria-labelledby="tituloModalSugestoes">
+        <div class="cabecalho-modal-professor">
+            <div>
+                <span class="etiqueta-secao">Sua opinião</span>
+                <h2 id="tituloModalSugestoes">Enviar sugestões</h2>
+            </div>
+            <button class="botao-fechar-modal" id="botaoFecharModalSugestoes" type="button" aria-label="Fechar formulário de sugestões">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <p>Use dados fictícios para testar. A mensagem será capturada no Mailtrap Sandbox, sem envio para um e-mail real.</p>
+        <form id="formSugestoes">
+            <div class="mb-3">
+                <label class="form-label" for="nomeSugestao">Nome</label>
+                <input class="form-control" id="nomeSugestao" name="name" type="text" maxlength="100" autocomplete="name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="emailSugestao">E-mail para contato</label>
+                <input class="form-control" id="emailSugestao" name="email" type="email" maxlength="120" autocomplete="email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="textoSugestao">Sugestão</label>
+                <textarea class="form-control" id="textoSugestao" name="message" rows="4" maxlength="2000" required></textarea>
+            </div>
+            <p id="resultadoSugestoes" role="status" aria-live="polite"></p>
+            <button class="btn btn-dourado" type="submit">Enviar sugestão de teste</button>
+        </form>
+    </dialog>
+
+    <script src="script.js"></script>
+    <script src="vlibras-init.js" defer></script>
+</body>
+
+</html>

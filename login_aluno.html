@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login do Aluno - Horizonte Educacional</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<!-- Classe pagina-autenticacao aplica o fundo em gradiente -->
+<body class="pagina-autenticacao">
+
+    <!-- Contêiner centralizado que limita a largura do formulário -->
+    <div class="container-autenticacao">
+        <div class="caixa-autenticacao">
+
+            <!-- Logo do portal -->
+            <img src="imagem/logotipo.png" alt="Horizonte Educacional" class="logo-autenticacao">
+
+            <h2>Acesso do Aluno</h2>
+
+            <!-- Formulário de login (enviado via JS para a rota /login do Flask) -->
+            <form id="formularioLogin">
+
+                <!-- Perfil definido pela página de acesso selecionada -->
+                <input type="hidden" id="perfilUsuario" name="role" value="aluno">
+
+                <!-- Campo de e-mail -->
+                <div class="grupo-campo">
+                    <label for="email">Email:</label>
+                    <div class="campo-com-visibilidade">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            maxlength="120"
+                            required
+                        >
+                        <!-- Botão para mostrar/ocultar o e-mail digitado -->
+                        <button
+                            type="button"
+                            class="btn-alternar-visibilidade"
+                            data-toggle-visibility="email"
+                            data-visible-type="email"
+                            data-hidden-type="password"
+                            data-field-label="e-mail"
+                            aria-label="Ocultar e-mail"
+                            aria-pressed="true"
+                        >
+                            <svg class="icone-visibilidade" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M2.2 12s3.5-6 9.8-6 9.8 6 9.8 6-3.5 6-9.8 6-9.8-6-9.8-6Z"></path>
+                                <circle cx="12" cy="12" r="2.5"></circle>
+                                <path class="icone-visibilidade-risco" d="m3 3 18 18"></path>
+                            </svg>
+                            <span>Ocultar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Campo de senha -->
+                <div class="grupo-campo">
+                    <label for="senha">Senha:</label>
+                    <div class="campo-com-visibilidade">
+                        <input
+                            type="password"
+                            id="senha"
+                            name="password"
+                            autocomplete="current-password"
+                            minlength="8"
+                            required
+                        >
+                        <!-- Botão para mostrar/ocultar a senha -->
+                        <button
+                            type="button"
+                            class="btn-alternar-visibilidade"
+                            data-toggle-visibility="senha"
+                            data-visible-type="text"
+                            data-hidden-type="password"
+                            data-field-label="senha"
+                            aria-label="Mostrar senha"
+                            aria-pressed="false"
+                        >
+                            <svg class="icone-visibilidade" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M2.2 12s3.5-6 9.8-6 9.8 6 9.8 6-3.5 6-9.8 6-9.8-6-9.8-6Z"></path>
+                                <circle cx="12" cy="12" r="2.5"></circle>
+                                <path class="icone-visibilidade-risco" d="m3 3 18 18"></path>
+                            </svg>
+                            <span>Mostrar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botão de envio -->
+                <button type="submit" class="btn btn-enviar-formulario">Entrar</button>
+
+                <!-- Link para a tela de registro -->
+                <p class="links-autenticacao">
+                    Não tem uma conta? <a href="/registro.html">Registre-se</a>
+                </p>
+                <p class="links-autenticacao">
+                    É professor? <a href="/login_professor.html">Acesse o login do Professor</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Área de notificação (mostrada/ocultada pelo auth.js) -->
+    <div id="areaNotificacao" class="notificacao" role="status" aria-live="polite" style="display: none;"></div>
+
+    <script src="auth.js"></script>
+    <script src="vlibras-init.js" defer></script>
+</body>
+</html>
